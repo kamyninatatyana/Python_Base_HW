@@ -1,34 +1,56 @@
 # УРОК 2
+
 # 1. Создать список и заполнить его элементами различных типов данных. Реализовать скрипт проверки
 # типа данных каждого элемента. Использовать функцию type() для проверки типа. Элементы списка можно
 # не запрашивать у пользователя, а указать явно, в программе.
 
-print("Задание 1. Проверить тип каждого элемента списка.")
+print("Задание 1.")
 
-my_list = [1, "apple", 3.14, [1, 2, 3, 4, 5], None, True]
+my_list = [1, "apple", 3.14, [1, 2, 3, 4, 5], {4, 3, 5}, None, True]
 
-for item in my_list:
-    print(type(item))
+for item in enumerate(my_list, 1):
+    print(f"{item[0]}. {item[1]}: {type(item[1])}")
 
 # 2. Для списка реализовать обмен значений соседних элементов, т.е. Значениями обмениваются элементы
 # с индексами 0 и 1, 2 и 3 и т.д. При нечетном количестве элементов последний сохранить на своем месте.
 # Для заполнения списка элементов необходимо использовать функцию input().
 
 print()
-print("Задание 2. Поменять местами значения соседних элементов списка.")
+print("Задание 2. Вариант 1.")
 
-next_item = ""
+next_item = None
 my_list = []
 i = 1
 
 while next_item != "y":
-    my_list.append(input("Пожалуйста, введите %d-й элемент списка: " % i))
-    next_item = input("Закончить ввод? ('y' - да, любая другая клавиша - продолжить): ")
-    next_item = next_item.lower()
+    my_list.append(input(f"Пожалуйста, введите {i}-й элемент списка: "))
+    next_item = input("Закончить ввод? ('y' - да, любая другая клавиша - продолжить): ").lower()
     i += 1
 
 print("Список до перестановки: ", my_list)
-my_list_copy = my_list.copy()
+
+even_index = []
+odd_index = []
+my_list_new = []
+
+for i in range(0, len(my_list), 2):
+    even_index.append(my_list[i])
+
+for i in range(1, len(my_list), 2):
+    odd_index.append(my_list[i])
+
+for i in range(len(odd_index)):
+    my_list_new.append(odd_index[i])
+    my_list_new.append(even_index[i])
+
+if len(even_index) > len(odd_index):
+    my_list_new.append(even_index[len(even_index)-1])
+
+
+print("Список после перестановки: ", my_list_new)
+
+print()
+print("Задание 2. Вариант 2.")
 
 i = 0
 var_to_store = 0
@@ -49,22 +71,53 @@ print("Список после перестановки: ", my_list)
 # месяц (зима, весна, лето, осень). Напишите решения через list и через dict.
 
 print()
-print("Задание 3. Сообщить пользователю, к какому времени года относится введенный им месяц.")
+print("Задание 3.")
 
-user_month = int(input("Введите номер месяца в виде целого числа от 1 до 12: "))
+while True:
+    user_month = (input("Введите номер месяца в виде целого числа от 1 до 12: "))
+    if user_month.isdigit() and 12 >= int(user_month) >= 1:
+        user_month = int(user_month)
+        break
+    else:
+        print("Номер месяца необходимо указывать числом. И он не может быть меньше единицы и больше 12! ")
 
+print()
 print("Вариант 1:")
 
-season_list = ["зима", "зима", "весна", "весна", "весна", "лето", "лето", "лето", "осень", "осень", "осень", "зима"]
+season_list = ["Зима", "Весна", "Лето", "Осень"]
+months_list = [(1, 2, 12), (3, 4, 5), (6, 7, 8), (9, 10, 11)]
 
-print(season_list[int(user_month-1)])
+for months in months_list:
+    if user_month in months:
+        print(season_list[months_list.index(months)])
 
 print()
 print("Вариант 2:")
 
-seasons_dict = {1: "Зима", 2: "Зима", 3: "Весна", 4: "Весна", 5: "Весна", 6: "Лето", 7: "Лето", 8: "Лето",
-                9: "Осень", 10: "Осень", 11: "Осень", 12: "Зима"}
-print(seasons_dict.get(user_month))
+seasons_dict = {
+                (1, 2, 12): "Зима",
+                (3, 4, 5): "Весна",
+                (6, 7, 8): "Лето",
+                (9, 10, 11): "Осень"
+                }
+
+for months in seasons_dict:
+    if user_month in months:
+        print(seasons_dict[months])
+
+print()
+print("Вариант 3:")
+
+seasons_dict = {
+                "Зима": (1, 2, 12),
+                "Весна": (3, 4, 5),
+                "Лето": (6, 7, 8),
+                "Осень": (9, 10, 11)
+                }
+
+for season, months in seasons_dict.items():
+    if user_month in months:
+        print(season)
 
 # 4. Пользователь вводит строку из нескольких слов, разделённых пробелами. Вывести каждое слово с новой
 # строки. Строки необходимо пронумеровать. Если слово длинное, выводить только первые 10 букв в слове.
@@ -73,8 +126,8 @@ print()
 print("Задание 4.")
 string = input("Введите строку из нескольких слов, разделенных пробелами: ")
 
-for el in enumerate(string.split(" "), 1):
-    print(el[0:10])
+for el in enumerate(string.split(), 1):
+    print(f"{el[0]}. {el[1][0:10]}")
 
 # 5. Реализовать структуру «Рейтинг», представляющую собой не возрастающий набор натуральных чисел.
 # У пользователя необходимо запрашивать новый элемент рейтинга. Если в рейтинге существуют элементы с
@@ -91,15 +144,28 @@ print("Задание 5.")
 
 my_list = [7, 5, 3, 3, 2]
 print("Первоначальный список: ", my_list)
-next_item = ""
+next_item = None
 
 while next_item != "y":
+
     user_number = int(input("Введите любое натуральное (целое, положительное) число: "))
-    my_list.append(user_number)
-    my_list.sort(reverse=True)
+
+    for i in range(len(my_list)):
+        if user_number <= my_list[i]:
+            continue
+        elif user_number > my_list[i]:
+            my_list.insert(i, str(user_number))
+            break
+
+    if user_number <= my_list[len(my_list)-1]:
+        my_list.append(str(user_number))
+
     print("Новый список теперь выглядит вот так:", my_list)
+
+    my_list = [int(item) for item in my_list]
     next_item = input("Закончить ввод? ('y' - да, любая другая клавиша - продолжить): ")
     next_item = next_item.lower()
+
 
 # 6. * Реализовать структуру данных «Товары». Она должна представлять собой список кортежей. Каждый кортеж
 # хранит информацию об отдельном товаре. В кортеже должно быть два элемента — номер товара и словарь с
