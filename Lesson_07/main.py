@@ -1,6 +1,5 @@
 from Lesson_07.Classes import Matrix
 import random as rd
-import numpy
 from Lesson_07.Classes import Coat, Suit
 from Lesson_07.Classes import Cell
 
